@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Thomas Rogers Blog Site</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome-all.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="container">
+       <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">My Blog</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/list">List Blogs</a>
+        <a class="nav-item nav-link active" href="/add">Add Blog</a>
+        </div>
+    </div>
+</nav>
+       <p></p>
+       <h4>Thomas Rogers Blog Site</h4>
+       <p>Welcome to my blog site.</p>
+    </div> <!-- container -->
   </body>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 </html>
