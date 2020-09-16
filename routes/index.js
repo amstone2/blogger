@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-var indexController = require('../controllers/indexController');
-var addController = require('../controllers/addController');
-var listController = require('../controllers/listController');
+var blogController = require('../controllers/blog');
 
-router.get('/', indexController.index);
-router.get('/add', addController.add);
-router.get('/list', listController.list);
 
+
+router.get('/', blogController.index);
+router.get('/add', blogController.add);
+router.get('/list', blogController.list);
 
 
 
