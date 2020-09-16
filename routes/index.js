@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-const addController = require('../controllers/addController.js');
-const listController = require('../controllers/listController');
+var indexController = require('../controllers/indexController');
+var addController = require('../controllers/addController');
+var listController = require('../controllers/listController');
+
+router.get('/', indexController.index);
+router.get('/add', addController.add);
+router.get('/list', listController.list);
 
 
-router.get('/', addController.add);
-router.get('/', listController.list);
-
-
-/* GET home page. */
 
 
 module.exports = router;
