@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog List</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary">
+            <a class="navbar-brand" href="/">My Blog</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/list">List Blogs</a>
+                    <a class="nav-item nav-link active" href="/add">Add Blog</a>
+                </div>
+            </div>
+        </nav>
+        <p>
+
+        <% blog.forEach(function(blogEntry){ %>
+            <div class="card border-primary" style="width: 50%">
+                <div class="card-header">
+                    <h5 class="card-title"><%= blogEntry.blogTitle %></h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-body"><%= blogEntry.blogText %></p>
+                </div>
+                <div class="card-footer">
+                    <div class="col-sm">
+                        <ul class="nav justify-content-end nav-pills card-header-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" href=<%= "/edit/" + blogEntry._id %>> <i class="fa fa-edit"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href=<%= "/delete/" + blogEntry._id %>> <i class="fa fa-trash"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div></br>
+        <% }) %>
+        <p>
+</html>

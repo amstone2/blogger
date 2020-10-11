@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Add Blog</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">My Blog</a>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/list">List Blogs</a>
+          <a class="nav-item nav-link active" href="/add">Add Blog</a>
+        </div>
+      </div>
+    </nav>
+    <p></p>
+    <form method="POST" class="card bg-light">
+      <h1 class="mt-4"><%= title %></h1>
+      <input type="text" name="blogTitle" placeholder="Blog Title" class="title mt-5">
+      <textarea name="blogText" placeholder="Enter Blog Text" class="text my-5"></textarea>
+      <input type="submit" value="Submit" id="submitbtn" class="submit mb-5">
+      </form>
+  </div> <!-- container -->
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>

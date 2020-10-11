@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Delete Blog</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">My Blog</a>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/list">List Blogs</a>
+          <a class="nav-item nav-link active" href="/add">Add Blog</a>
+        </div>
+      </div>
+    </nav></br>
+    <form method="POST" class="card bg-light">
+      <h1 ><%= title %></h1>
+      <input type="text" name="blogTitle" value="<%= blog.blogTitle %>">
+      <textarea name="blogText" class="text my-5"><%= blog.blogText %></textarea>
+      <input type="submit" value="Submit" class="submit mb-5">
+    </form>
+  </div> <!-- container -->
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>
