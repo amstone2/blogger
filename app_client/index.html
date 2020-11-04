@@ -1,0 +1,122 @@
+<!doctype html>
+<html ng-app="bloggerApp">
+
+<head>
+  <script src="/angular/angular.min.js"></script>
+  <script src="/angular/angular-route.min.js"></script>
+  <script src="/angular/angular-ui-router.min.js"></script>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <!-- Navigation Directive -->
+  <div ng-controller="NavigationController">
+    <navigation></navigation>
+  </div>
+
+
+  <!-- Navigation 
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary">
+    <a class="navbar-brand" href="#/">My Blog</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#/blog-list">List Blogs</a>
+        <a class="nav-item nav-link active" href="#/blog-add">Add Blog</a>
+        </div>
+    </div>
+    </nav> 
+    -->
+
+
+  <!-- Angular Templates -->
+  <script type="text/ng-template" id="pages/index.html">
+      <p></p>
+      <h2>{{vm.pageHeader.title}}</h2>
+      <h4>{{vm.message}}</h4>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-list.html">
+      <p></p>
+      <div ng-repeat="blog in vm.blogs">
+      <div class="card border-primary" style="width: 50%"> 
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <h5 class ="card-title">{{blog.blogTitle}}</h5>
+                <p class="card-text">{{blog.blogText}}</p>
+                <p ng-bind="blog.createdOn | date:'MM/dd/yyyy h:mm a'"></p>
+            </div>
+            <div class="card-footer">
+                <div class = "col-sm">
+                   <ul class="nav justify-content-end nav-pills card-header-pills">
+                     <li class="nav-item">
+                      <a ng-show="vm.isLoggedIn()" class="nav-link" href="#/blog-edit/{{blog._id}}"> <i class="fa fa-edit"></i></a>
+                     </li>
+                     <li class="nav-item">
+                      <a ng-show="vm.isLoggedIn()" class="nav-link" href="#/blog-delete/{{blog._id}}"> <i class="fa fa-trash"></i></a>
+                     </li>
+                   </ul>
+            </div>
+            </div>
+      </div>
+      <p> <!-- card -->              
+      </div>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-add.html">
+        <p></p>
+        <div class="card border-primary" style="width: 50%"> 
+        <form name="userForm" ng-submit="vm.submit()" ng-controller="AddController" style="padding: 20px">    
+            <div class="form-group">
+                <label for="summary" class="text-primary">Blog Title</label>
+                <input class="form-control" id="title" name="blogTitle">
+                <label for="detail" class="text-primary">Blog Text</label>
+                <textarea class="form-control" id="text" rows="3" name="blogText"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Add Blog">
+        </form>
+        </div>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-edit.html">
+        <p></p>
+        <div class="card border-primary" style="width: 50%">  
+        <form name="userForm" ng-submit="vm.submit()" ng-controller="EditController" style="padding: 20px">
+            <div class="form-group">
+                <label for="summary" class="text-primary">Blog Title</label>
+                <input class="form-control" id="blogTitle" name="blogTitle" value="{{vm.blog.blogTitle}}">
+                <label for="detail" class="text-primary">Blog Text</label>
+                <textarea class="form-control" id="blogText" name="blogText" rows="3">{{blog.blogText}}</textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save Blog">
+        </form> 
+        </div>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-delete.html">
+        <p></p>
+        <div class="card border-primary" style="width: 50%">
+          <form name="userForm" ng-submit="vm.submit()" ng-controller="DeleteController" style="padding: 20px">    
+            <div class="form-group">
+                <label for="summary" class="text-primary">Blog Title</label>
+                <input readonly class="form-control" id="blogTitle" name="blogTitle" value="{{vm.blog.blogTitle}}">
+                <label for="detail" class="text-primary">Blog Text</label>
+                <textarea readonly class="form-control" id="blogText" name="blogText" rows="3">{{blog.blogText}}</textarea>
+            </div>
+               <input type="submit" class="btn btn-danger float-right" value="Delete Blog">
+               <button ng-click="vm.cancel()" ng-controller="DeleteController" class="btn btn-primary float-right" style="margin-right: 25px">Cancel</button>
+          </form>
+        </div>
+    </script>
+
+  <!-- Angular View (dynamic content goes here) -->
+  <div ng-view></div>
+
+  <script src="/angular/bloggerApp.js"></script>
+  <script src="/nav/navigation.js"></script>
+  <script src="/auth/authentication.js"></script>
+</body>
+
+</html>
