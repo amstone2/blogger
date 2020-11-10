@@ -1,0 +1,16 @@
+npm uninstall angular-router
+npm uninstall angular-ui-router
+npm uninstall angular
+npm uninstall angular-route
+
+
+npm install angular@1.5.6
+npm install angular-route@1.5.6
+npm install angular-ui-router@1.0.22
+
+git init 
+git checkout -b <branch>
+git add .
+git commit -m ""
+git remote add blogger https://github.com/amstone2/blogger
+git push --set-upstream https://github.com/amstone2/blogger <branch>
