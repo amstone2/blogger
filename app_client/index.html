@@ -1,0 +1,147 @@
+<!doctype html>
+<html ng-app="bloggerApp">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/angular/angular.min.js"></script>
+  <script src="/angular/angular-route.min.js"></script>
+  <script src="/angular/angular-ui-router.min.js"></script>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <!-- Navigation Directive -->
+  <div ng-controller="NavigationController">
+    <navigation></navigation>
+  </div>
+
+  <!-- Angular Templates -->
+  <script type="text/ng-template" id="pages/index.html">
+      <p></p>
+      <h2>{{vm.pageHeader.title}}</h2>
+      <h4>{{vm.message}}</h4>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-list.html">
+      <p></p>
+      <div ng-repeat="blog in vm.blogs">
+      <div class="card border-primary" style="width: 50%"> 
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <h5 class ="card-title">{{blog.blogTitle}}</h5>
+                <p class="card-text">{{blog.blogText}}</p>
+                <p class="card-text">{{blog.blogName}}</p>
+                <p class="card-text">{{blog.blogEmail}}</p>
+                <p ng-bind="blog.createdOn | date:'MM/dd/yyyy h:mm a'"></p>
+            </div>
+            <div class="card-footer">
+                <div class = "col-sm" ng-if="blog.blogName === vm.currentUser().name">
+                   <ul class="nav justify-content-end nav-pills card-header-pills">
+                    <li class="nav-item">
+                      <a ng-show="vm.isLoggedIn()" class="nav-link" href="#/blog-edit/{{blog._id}}"> <i class="fa fa-edit"></i></a>
+                  </li>
+                  <li class="nav-item">
+                      <a ng-show="vm.isLoggedIn()"class="nav-link" href="#/blog-delete/{{blog._id}}"> <i class="fa fa-trash"></i></a>
+                  </li>
+                   </ul>
+            </div>
+            </div>
+      </div>
+      <p> <!-- card -->              
+      </div>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-add.html">
+        <p></p>
+        <div class="card border-primary" style="width: 50%"> 
+        <form name="userForm" ng-submit="vm.submit()" ng-controller="AddController" style="padding: 20px">    
+            <div class="form-group">
+                <label for="summary" class="text-primary">Blog Title</label>
+                <input class="form-control" id="title" name="blogTitle">
+                <label for="detail" class="text-primary">Blog Text</label>
+                <textarea class="form-control" id="text" rows="3" name="blogText"></textarea>
+                <input type="hidden" readonly class="form-control" id="blogName" name="blogName" value="{{ vm.currentUser().name}}">
+                <input type="hidden" class="form-control" id="blogEmail" name="blogEmail" value="{{ vm.currentUser().email }}">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Add Blog">
+        </form>
+        </div>
+    </script>
+
+  <script type="text/ng-template" id="pages/blog-edit.html">
+      <p></p>
+      <div class="card border-primary" style="width: 50%">  
+      <form name="userForm" ng-submit="vm.submit()" ng-controller="EditController" style="padding: 20px">
+          <div class="form-group">
+              <label for="summary" class="text-primary">Blog Title</label>
+              <input class="form-control" id="blogTitle" name="blogTitle" value="{{vm.blog.blogTitle}}">
+              <label for="detail" class="text-primary">Blog Text</label>
+              <textarea class="form-control" id="blogText" name="blogText" rows="3">{{vm.blog.blogText}}</textarea>
+          </div>
+          <input type="submit" class="btn btn-primary" value="Save Blog">
+      </form> 
+      </div>
+  </script>
+
+  <script type="text/ng-template" id="pages/blog-delete.html">
+    <p></p>
+    <div class="card border-primary" style="width: 50%">
+      <form name="userForm" ng-submit="vm.submit()" ng-controller="DeleteController" style="padding: 20px">    
+        <div class="form-group">
+            <label for="summary" class="text-primary">Blog Title</label>
+            <input readonly class="form-control" id="blogTitle" name="blogTitle" value="{{vm.blog.blogTitle}}">
+            <label for="detail" class="text-primary">Blog Text</label>
+            <textarea readonly class="form-control" id="blogText" name="blogText" rows="3">{{vm.blog.blogText}}</textarea>
+        </div>
+        <input type="submit" class="btn btn-danger float-right" value="Delete Blog">
+        <button ng-click="vm.cancel()" ng-controller="DeleteController" class="btn btn-primary float-right" style="margin-right: 25px">Cancel</button>
+      </form>
+    </div>
+</script>
+
+  <script type="text/ng-template" id="pages/ttt.html">
+
+    <div class='container'>
+      <page-header content="vm.data.title"></page-header>
+  
+  
+          <div class='game-container'>
+              <div class='board'>
+                  <div id="square_0" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(0)">{{ vm.data.gameState.board[0] }}</div>
+                  <div id="square_1" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(1)">{{ vm.data.gameState.board[1] }}</div>
+                  <div id="square_2" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(2)">{{ vm.data.gameState.board[2] }}</div>
+                  <div id="square_3" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(3)">{{ vm.data.gameState.board[3] }}</div>
+                  <div id="square_4" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(4)">{{ vm.data.gameState.board[4] }}</div>
+                  <div id="square_5" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(5)">{{ vm.data.gameState.board[5] }}</div>
+                  <div id="square_6" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(6)">{{ vm.data.gameState.board[6] }}</div>
+                  <div id="square_7" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(7)">{{ vm.data.gameState.board[7] }}</div>
+                  <div id="square_8" ng-class="{'player-turn-square': vm.data.gameState.currentPlayer == vm.currentUserEmail && !vm.gameOver, square: true}" ng-click="vm.takeTurn(8)">{{ vm.data.gameState.board[8] }}</div>
+              </div>
+
+
+          </div>
+      </div>
+  
+  
+  </div>
+  </script>
+
+  <!-- Angular View (dynamic content goes here) -->
+  <div ng-view></div>
+
+  
+  <script src="/angular/bloggerApp.js"></script>
+  <script src="/nav/navigation.js"></script>
+  <script src="/auth/authentication.js"></script>
+</body>
+
+</html>
